@@ -641,7 +641,8 @@ export async function fetchReleaseDateInfo(
           });
 
           return {
-            releaseDate: showDetails.first_air_date || sonarrResult.nextEpisodeAirDate,
+            releaseDate:
+              showDetails.first_air_date || sonarrResult.nextEpisodeAirDate,
             nextEpisodeAirDate: sonarrResult.nextEpisodeAirDate,
             nextSeasonAirDate: sonarrResult.nextSeasonAirDate,
             seasonNumber: sonarrResult.seasonNumber,
@@ -716,7 +717,11 @@ async function fetchNextEpisodeFromSonarr(
             for (const season of monitoredSeasons) {
               const stats = season.statistics;
               // A season is "upcoming" if it has episodes but not all are downloaded
-              if (stats && stats.totalEpisodeCount > 0 && stats.episodeFileCount < stats.totalEpisodeCount) {
+              if (
+                stats &&
+                stats.totalEpisodeCount > 0 &&
+                stats.episodeFileCount < stats.totalEpisodeCount
+              ) {
                 // Check if this season has a future nextAiring date
                 if (stats.nextAiring) {
                   nextSeasonNumber = season.seasonNumber;
