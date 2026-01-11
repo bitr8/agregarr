@@ -1507,6 +1507,25 @@ export class MultiSourceOrchestrator {
             options.config.smartCollectionSort?.value,
             options.config.maxItems
           );
+
+          // Update title if it changed (for DYNAMIC_CYCLE_TITLE)
+          if (existingCollection.title !== collectionName) {
+            await plexClient.updateCollectionTitle(
+              collectionRatingKey,
+              collectionName
+            );
+            logger.debug(
+              `Updated title for smart multi-source collection: ${existingCollection.title} -> ${collectionName}`,
+              {
+                label: 'Multi-Source Orchestrator',
+                configId: options.config.id,
+                collectionRatingKey,
+                oldTitle: existingCollection.title,
+                newTitle: collectionName,
+              }
+            );
+          }
+
           updated = 1;
         } else {
           // MIGRATION: Old system had a regular collection, delete it
@@ -1651,6 +1670,25 @@ export class MultiSourceOrchestrator {
               collectionRatingKey,
               plexItems
             );
+
+            // Update title if it changed (for DYNAMIC_CYCLE_TITLE)
+            if (existingCollection.title !== collectionName) {
+              await plexClient.updateCollectionTitle(
+                collectionRatingKey,
+                collectionName
+              );
+              logger.debug(
+                `Updated title for multi-source collection: ${existingCollection.title} -> ${collectionName}`,
+                {
+                  label: 'Multi-Source Orchestrator',
+                  configId: options.config.id,
+                  collectionRatingKey,
+                  oldTitle: existingCollection.title,
+                  newTitle: collectionName,
+                }
+              );
+            }
+
             updated = 1;
           }
         }
